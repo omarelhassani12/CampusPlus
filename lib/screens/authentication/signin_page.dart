@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:school_app/screens/authentication/choose_role.dart';
 import 'package:school_app/utils/colors.dart';
+import 'package:school_app/widgets/app_logo.dart';
 import 'package:school_app/widgets/button_widget.dart';
 
 class LoginPage extends StatefulWidget {
@@ -45,7 +46,9 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const FlutterLogo(size: 100),
+                      const AppLogo(
+                        size: 150,
+                      ),
                       _gap(),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),

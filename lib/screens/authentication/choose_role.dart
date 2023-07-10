@@ -62,7 +62,7 @@ class _RoleSelectionPageState extends State<RoleSelectionPage> {
               ),
               const SizedBox(height: 100),
               WhiteButton(
-                buttonText: "Create Your ${selectedRole ?? ''} Account ",
+                buttonText: "Create Your ${selectedRole ?? ""} Account ",
                 onPressed: () {
                   if (selectedRole == "Admin") {
                     Navigator.push(
@@ -84,18 +84,25 @@ class _RoleSelectionPageState extends State<RoleSelectionPage> {
                     );
                   } else {
                     showDialog(
-                        context: context,
-                        builder: (_) {
-                          return AlertDialog(
-                            icon: Icon(
-                              Icons.error,
-                              size: 40,
-                              color: ColorsApp.accentClr,
-                            ),
-                            title: const Text("You have chosen a role"),
-                            titleTextStyle: TextStyle(color: ColorsApp.mainClr),
-                          );
-                        });
+                      context: context,
+                      builder: (_) {
+                        return AlertDialog(
+                          icon: Icon(
+                            Icons.error,
+                            size: 40,
+                            color: ColorsApp.accentClr,
+                          ),
+                          title: Text(
+                            "Role Not Selected",
+                            style: TextStyle(color: ColorsApp.mainClr),
+                          ),
+                          content: const Text(
+                            "Please select a role to proceed.",
+                            textAlign: TextAlign.center,
+                          ),
+                        );
+                      },
+                    );
                   }
                 },
               ),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:school_app/screens/authentication/choose_role.dart';
+import 'package:school_app/screens/adminscreens/admin_home_screen.dart';
+import 'package:school_app/screens/authentication/signin_page.dart';
 import 'package:school_app/utils/colors.dart';
 import 'package:school_app/utils/form_field_validators.dart';
+import 'package:school_app/widgets/app_logo.dart';
 import 'package:school_app/widgets/button_widget.dart';
 
 class AdminSignupPage extends StatefulWidget {
@@ -49,15 +51,8 @@ class _AdminSignupPageState extends State<AdminSignupPage> {
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const FlutterLogo(size: 100),
-                      const SizedBox(height: 16),
-                      Text(
-                        "Admin Sign Up",
-                        style: TextStyle(
-                          color: ColorsApp.mainClr,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      const AppLogo(
+                        size: 150,
                       ),
                       const SizedBox(height: 16),
                       Row(
@@ -218,7 +213,14 @@ class _AdminSignupPageState extends State<AdminSignupPage> {
                       const SizedBox(height: 16),
                       MainButton(
                         buttonText: "Sign Up",
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const AdminHomeScreen(),
+                            ),
+                          );
+                        },
                       ),
                       const SizedBox(height: 16),
                       GestureDetector(
@@ -226,7 +228,7 @@ class _AdminSignupPageState extends State<AdminSignupPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const RoleSelectionPage(),
+                              builder: (context) => const LoginPage(),
                             ),
                           );
                         },
