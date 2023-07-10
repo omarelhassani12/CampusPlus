@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:school_app/screens/authentication/choose_role.dart';
 import 'package:school_app/utils/colors.dart';
+import 'package:school_app/utils/form_field_validators.dart';
 import 'package:school_app/widgets/button_widget.dart';
 
 class AdminSignupPage extends StatefulWidget {
@@ -86,6 +87,7 @@ class _AdminSignupPageState extends State<AdminSignupPage> {
                                 FilteringTextInputFormatter.allow(
                                     RegExp(r'[a-zA-Z]+')),
                               ],
+                              validator: FormFieldValidators.validateName,
                             ),
                           ),
                           const SizedBox(width: 16),
@@ -114,6 +116,7 @@ class _AdminSignupPageState extends State<AdminSignupPage> {
                                 FilteringTextInputFormatter.allow(
                                     RegExp(r'[a-zA-Z]+')),
                               ],
+                              validator: FormFieldValidators.validateName,
                             ),
                           ),
                         ],
@@ -151,17 +154,7 @@ class _AdminSignupPageState extends State<AdminSignupPage> {
                             });
                           }
                         },
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your email';
-                          }
-
-                          if (!value.endsWith('@gmail.com')) {
-                            return 'Please enter a valid Gmail address';
-                          }
-
-                          return null;
-                        },
+                        validator: FormFieldValidators.validateEmail,
                       ),
                       const SizedBox(height: 16),
                       TextFormField(
@@ -192,19 +185,7 @@ class _AdminSignupPageState extends State<AdminSignupPage> {
                             color: ColorsApp.mainClr,
                           ),
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your phone number';
-                          }
-                          final digitsOnly =
-                              value.replaceAll(RegExp(r'\D'), '');
-                          if (!digitsOnly.startsWith('212') ||
-                              digitsOnly.length != 12) {
-                            return 'Please enter a valid Moroccan phone number';
-                          }
-
-                          return null;
-                        },
+                        validator: FormFieldValidators.validatePhoneNumber,
                       ),
                       const SizedBox(height: 16),
                       TextFormField(
@@ -232,15 +213,7 @@ class _AdminSignupPageState extends State<AdminSignupPage> {
                             color: ColorsApp.mainClr,
                           ),
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
-                          }
-                          if (value.length < 8) {
-                            return 'Password must be at least 8 characters';
-                          }
-                          return null;
-                        },
+                        validator: FormFieldValidators.validatePassword,
                       ),
                       const SizedBox(height: 16),
                       MainButton(
