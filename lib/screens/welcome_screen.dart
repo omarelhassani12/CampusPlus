@@ -7,12 +7,13 @@ class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _WelcomeScreenState createState() => _WelcomeScreenState();
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
   final PageController _pageController = PageController(initialPage: 0);
-  int _currentPageIndex = 0;
+  int currentPageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           controller: _pageController,
           onPageChanged: (index) {
             setState(() {
-              _currentPageIndex = index;
+              currentPageIndex = index;
             });
           },
           children: [
@@ -149,7 +150,7 @@ class PageContent extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 10),
                   Expanded(
                     flex: 1,
                     child: Center(
@@ -164,7 +165,7 @@ class PageContent extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 25),
                   Expanded(
                     flex: 1,
                     child: Center(

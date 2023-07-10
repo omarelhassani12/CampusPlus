@@ -10,6 +10,7 @@ class LongPressButton extends StatefulWidget {
   final Color toastBackgroundColor;
   final Color toastTextColor;
   final String toastMessage;
+  final VoidCallback onPressed;
 
   const LongPressButton({
     Key? key,
@@ -21,9 +22,11 @@ class LongPressButton extends StatefulWidget {
     required this.toastBackgroundColor,
     required this.toastTextColor,
     required this.toastMessage,
+    required this.onPressed,
   }) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _LongPressButtonState createState() => _LongPressButtonState();
 }
 
@@ -44,7 +47,7 @@ class _LongPressButtonState extends State<LongPressButton> {
         });
       },
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: widget.onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: widget.backgroundColor,
         ),

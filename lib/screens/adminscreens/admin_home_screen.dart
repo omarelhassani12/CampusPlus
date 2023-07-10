@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:school_app/screens/adminscreens/admin_users_screen.dart';
 import 'package:school_app/utils/colors.dart';
 import 'package:school_app/widgets/app_logo.dart';
 import 'package:school_app/widgets/button_widget.dart';
@@ -79,6 +80,13 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                           toastBackgroundColor: ColorsApp.greyClr,
                           toastTextColor: Colors.white,
                           toastMessage: 'Users',
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const AdminUsersScreen()),
+                            );
+                          },
                         ),
                         LongPressButton(
                           icon: Icons.school,
@@ -89,6 +97,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                           toastBackgroundColor: ColorsApp.greyClr,
                           toastTextColor: Colors.white,
                           toastMessage: 'Student',
+                          onPressed: () {},
                         ),
                         LongPressButton(
                           icon: Icons.person,
@@ -99,6 +108,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                           toastBackgroundColor: ColorsApp.greyClr,
                           toastTextColor: Colors.white,
                           toastMessage: 'Person',
+                          onPressed: () {},
                         ),
                         LongPressButton(
                           icon: Icons.book,
@@ -109,6 +119,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                           toastBackgroundColor: ColorsApp.greyClr,
                           toastTextColor: Colors.white,
                           toastMessage: 'Courses',
+                          onPressed: () {},
                         ),
                       ],
                     ),
@@ -213,7 +224,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                             .bottom,
                                       ),
                                       height: 200,
-                                      child: Center(
+                                      child: const Center(
                                         child: Text('Modal Content'),
                                       ),
                                     ),
@@ -236,6 +247,36 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                           MainButton(
                             buttonText: 'Generate Revenue Reports',
                             onPressed: () {},
+                          ),
+                        if (selectedCardIndex != 0 &&
+                            selectedCardIndex != 1 &&
+                            selectedCardIndex != 2 &&
+                            selectedCardIndex != 3)
+                          MainButton(
+                            buttonText: 'Generate Reports',
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (_) {
+                                  return AlertDialog(
+                                    icon: Icon(
+                                      Icons.error,
+                                      size: 40,
+                                      color: ColorsApp.accentClr,
+                                    ),
+                                    title: Text(
+                                      "Reports Not Selected",
+                                      style:
+                                          TextStyle(color: ColorsApp.mainClr),
+                                    ),
+                                    content: const Text(
+                                      "Please select a Reports to proceed.",
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  );
+                                },
+                              );
+                            },
                           ),
                       ],
                     ),

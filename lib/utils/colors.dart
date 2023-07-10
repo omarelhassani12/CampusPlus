@@ -11,8 +11,8 @@ class ColorsApp {
   static Color greyClr = Colors.grey;
   static Color topClr = colorFromHex('#32357A').withOpacity(0.90);
   static Color bottomClr = colorFromHex('#32357A').withOpacity(0.97);
-  // static Color topClr = Colors.blue.shade900;
-  // static Color bottomClr = Colors.blue.shade300;
+  static Color mClr = Colors.blue.shade900;
+  static Color blueClr = Colors.blue.shade300;
 }
 
 Color colorFromHex(String hexColor) {
