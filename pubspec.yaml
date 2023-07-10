@@ -14,6 +14,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   carousel_slider: ^4.2.1
   provider: ^6.0.5
+  get: ^4.6.5
+  shared_preferences: ^2.2.0
 
 dev_dependencies:
   flutter_test:

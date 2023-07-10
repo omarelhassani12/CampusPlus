@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:school_app/screens/authentication/choose_role.dart';
 import 'package:school_app/utils/colors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -34,9 +35,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           },
           children: [
             PageContent(
-              icon: Icons.science,
-              texttitle: 'Welcome to School App',
-              textcontent: 'Welcome to School App',
+              icon: Icons.explore,
+              texttitle: 'Welcome to our learning platform!',
+              textcontent:
+                  'Explore a diverse collection of educational courses tailored for your academic growth and personal development.',
               buttonText: 'Next',
               onPressed: () {
                 _pageController.animateToPage(
@@ -47,9 +49,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               },
             ),
             PageContent(
-              icon: Icons.assignment,
-              texttitle: 'Page 2',
-              textcontent: 'Page 2',
+              icon: Icons.lightbulb_outline,
+              texttitle: 'Unlock the world of knowledge!',
+              textcontent:
+                  'Immerse yourself in a learning journey that expands your horizons and enhances your skills.',
               buttonText: 'Next',
               onPressed: () {
                 _pageController.nextPage(
@@ -59,11 +62,19 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               },
             ),
             PageContent(
-              icon: Icons.person,
-              texttitle: 'Page 3',
-              textcontent: 'Page 3',
-              buttonText: 'Finish',
-              onPressed: () {},
+              icon: Icons.school,
+              texttitle: 'Embark on a journey of lifelong learning!',
+              textcontent:
+                  'Discover new subjects, acquire valuable knowledge, and empower yourself for success.',
+              buttonText: 'Start',
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const RoleSelectionPage(),
+                  ),
+                );
+              },
             ),
           ],
         ),
@@ -99,7 +110,7 @@ class PageContent extends StatelessWidget {
             ClipPath(
               clipper: HalfCircleClipper(),
               child: Container(
-                height: 420,
+                height: MediaQuery.of(context).size.height / 2,
                 color: ColorsApp.mainClr,
               ),
             ),
@@ -114,72 +125,89 @@ class PageContent extends StatelessWidget {
             ),
           ],
         ),
-        Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: ColorsApp.whiteClr,
-              ),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+            child: SizedBox(
               width: double.infinity,
-              height: 200,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CarouselSlider(
-                    options: CarouselOptions(
-                      height: 10,
-                      enlargeCenterPage: false,
-                      autoPlay: false,
-                      aspectRatio: 1.0,
-                      onPageChanged: (index, _) {},
-                    ),
-                    items:
-                        List.generate(3, (index) => _buildDotIndicator(index)),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    texttitle,
-                    style: TextStyle(
-                      color: ColorsApp.blackClr,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    textcontent,
-                    style: TextStyle(
-                      color: ColorsApp.greyClr,
-                      fontSize: 15,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: onPressed,
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.blue.shade900,
-                      backgroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 40,
-                        vertical: 12,
+                  Expanded(
+                    flex: 1,
+                    child: CarouselSlider(
+                      options: CarouselOptions(
+                        height: 10,
+                        enlargeCenterPage: false,
+                        autoPlay: false,
+                        aspectRatio: 1.0,
+                        onPageChanged: (index, _) {},
                       ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    child: Text(
-                      buttonText,
-                      style: const TextStyle(
-                        fontSize: 16,
+                      items: List.generate(
+                        3,
+                        (index) => _buildDotIndicator(index),
                       ),
                     ),
                   ),
+                  const SizedBox(height: 40),
+                  Expanded(
+                    flex: 1,
+                    child: Center(
+                      child: Text(
+                        texttitle,
+                        style: TextStyle(
+                          color: ColorsApp.mainClr,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Expanded(
+                    flex: 1,
+                    child: Center(
+                      child: Text(
+                        textcontent,
+                        style: TextStyle(
+                          color: ColorsApp.greyClr,
+                          fontSize: 15,
+                          fontWeight: FontWeight.normal,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 50),
+                  SizedBox(
+                    width: 250,
+                    child: ElevatedButton(
+                      onPressed: onPressed,
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: ColorsApp.whiteClr,
+                        backgroundColor: ColorsApp.mainClr,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 40,
+                          vertical: 12,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      child: Text(
+                        buttonText,
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 100),
                 ],
               ),
             ),
-          ],
+          ),
         ),
       ],
     );
@@ -190,7 +218,7 @@ class PageContent extends StatelessWidget {
     return Container(
       width: 8,
       height: 8,
-      margin: EdgeInsets.symmetric(horizontal: 4),
+      margin: const EdgeInsets.symmetric(horizontal: 4),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: dotColor,
@@ -217,4 +245,3 @@ class HalfCircleClipper extends CustomClipper<Path> {
     return false;
   }
 }
-
