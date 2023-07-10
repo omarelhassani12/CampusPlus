@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:school_app/utils/colors.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class WelcomeScreen extends StatefulWidget {
-  const WelcomeScreen({super.key});
+  const WelcomeScreen({Key? key}) : super(key: key);
 
   @override
   _WelcomeScreenState createState() => _WelcomeScreenState();
@@ -33,9 +34,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           },
           children: [
             PageContent(
-              // iconnext: Icons.school,
-              iconback: Icons.science,
-              text: 'Welcome to School App',
+              icon: Icons.science,
+              texttitle: 'Welcome to School App',
+              textcontent: 'Welcome to School App',
               buttonText: 'Next',
               onPressed: () {
                 _pageController.animateToPage(
@@ -46,26 +47,23 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               },
             ),
             PageContent(
-              // iconnext: Icons.assignment,
-              text: 'Page 2',
+              icon: Icons.assignment,
+              texttitle: 'Page 2',
+              textcontent: 'Page 2',
               buttonText: 'Next',
               onPressed: () {
-                // Handle button press for page 2
                 _pageController.nextPage(
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeInOut,
                 );
               },
-              iconback: Icons.assignment,
             ),
             PageContent(
-              // iconnext: Icons.person,
-              text: 'Page 3',
+              icon: Icons.person,
+              texttitle: 'Page 3',
+              textcontent: 'Page 3',
               buttonText: 'Finish',
-              onPressed: () {
-                // Handle button press for page 3
-              },
-              iconback: Icons.person,
+              onPressed: () {},
             ),
           ],
         ),
@@ -75,17 +73,19 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 }
 
 class PageContent extends StatelessWidget {
-  final IconData iconback;
-  final String text;
+  final IconData icon;
+  final String texttitle;
+  final String textcontent;
   final String buttonText;
   final VoidCallback onPressed;
 
   const PageContent({
     Key? key,
-    required this.iconback,
-    required this.text,
+    required this.icon,
     required this.buttonText,
     required this.onPressed,
+    required this.texttitle,
+    required this.textcontent,
   }) : super(key: key);
 
   @override
@@ -94,12 +94,25 @@ class PageContent extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        ClipPath(
-          clipper: HalfCircleClipper(),
-          child: Container(
-            height: 420,
-            color: ColorsApp.mainClr,
-          ),
+        Stack(
+          children: [
+            ClipPath(
+              clipper: HalfCircleClipper(),
+              child: Container(
+                height: 420,
+                color: ColorsApp.mainClr,
+              ),
+            ),
+            Positioned.fill(
+              child: Center(
+                child: Icon(
+                  icon,
+                  size: 80,
+                  color: ColorsApp.whiteClr,
+                ),
+              ),
+            ),
+          ],
         ),
         Stack(
           alignment: Alignment.bottomCenter,
@@ -113,21 +126,45 @@ class PageContent extends StatelessWidget {
               height: 200,
               child: Column(
                 children: [
+                  CarouselSlider(
+                    options: CarouselOptions(
+                      height: 10,
+                      enlargeCenterPage: false,
+                      autoPlay: false,
+                      aspectRatio: 1.0,
+                      onPageChanged: (index, _) {},
+                    ),
+                    items:
+                        List.generate(3, (index) => _buildDotIndicator(index)),
+                  ),
+                  SizedBox(height: 20),
                   Text(
-                    text,
+                    texttitle,
                     style: TextStyle(
                       color: ColorsApp.blackClr,
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  SizedBox(height: 20),
+                  Text(
+                    textcontent,
+                    style: TextStyle(
+                      color: ColorsApp.greyClr,
+                      fontSize: 15,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                  SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: onPressed,
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.blue.shade900,
                       backgroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 40, vertical: 12),
+                        horizontal: 40,
+                        vertical: 12,
+                      ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
@@ -145,6 +182,19 @@ class PageContent extends StatelessWidget {
           ],
         ),
       ],
+    );
+  }
+
+  Widget _buildDotIndicator(int index) {
+    final Color dotColor = index == 0 ? ColorsApp.mainClr : ColorsApp.greyClr;
+    return Container(
+      width: 8,
+      height: 8,
+      margin: EdgeInsets.symmetric(horizontal: 4),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: dotColor,
+      ),
     );
   }
 }
@@ -168,337 +218,3 @@ class HalfCircleClipper extends CustomClipper<Path> {
   }
 }
 
-
-
-
-// class WelcomeScreen extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Container(
-//         width: double.infinity,
-//         decoration: BoxDecoration(
-//           gradient: LinearGradient(
-//             begin: Alignment.topCenter,
-//             end: Alignment.bottomCenter,
-//             colors: [Colors.blue.shade900, Colors.blue.shade300],
-//           ),
-//         ),
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           crossAxisAlignment: CrossAxisAlignment.center,
-//           children: [
-//             Icon(
-//               Icons.school,
-//               size: 80,
-//               color: Colors.white,
-//             ),
-//             SizedBox(height: 20),
-//             Text(
-//               'Welcome to School App',
-//               style: TextStyle(
-//                 color: Colors.white,
-//                 fontSize: 24,
-//                 fontWeight: FontWeight.bold,
-//               ),
-//             ),
-//             SizedBox(height: 20),
-//             ElevatedButton(
-//               onPressed: () {
-//                 // Handle button press
-//               },
-//               child: Text(
-//                 'Get Started',
-//                 style: TextStyle(
-//                   fontSize: 16,
-//                 ),
-//               ),
-//               style: ElevatedButton.styleFrom(
-//                 foregroundColor: Colors.blue.shade900,
-//                 backgroundColor: Colors.white,
-//                 padding: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
-//                 shape: RoundedRectangleBorder(
-//                   borderRadius: BorderRadius.circular(30),
-//                 ),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// import 'package:flutter/material.dart';
-// import 'package:school_app/utils/colors.dart';
-
-// class WelcomeScreen extends StatefulWidget {
-//   const WelcomeScreen({super.key});
-
-//   @override
-//   _WelcomeScreenState createState() => _WelcomeScreenState();
-// }
-
-// class _WelcomeScreenState extends State<WelcomeScreen> {
-//   final PageController _pageController = PageController(initialPage: 0);
-//   int _currentPageIndex = 0;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       // appBar: AppBar(
-//       //   backgroundColor: Colors.blue.shade900,
-//       //   title: const Text(
-//       //     'School App',
-//       //     style: TextStyle(color: Colors.white),
-//       //   ),
-//       //   centerTitle: true,
-//       //   elevation: 0,
-//       //   // actions: [
-//       //   //   if (_currentPageIndex == 0)
-//       //   //     IconButton(
-//       //   //       icon: Icon(Icons.arrow_forward),
-//       //   //       onPressed: () {
-//       //   //         _pageController.animateToPage(
-//       //   //           2,
-//       //   //           duration: Duration(milliseconds: 300),
-//       //   //           curve: Curves.easeInOut,
-//       //   //         );
-//       //   //       },
-//       //   //     ),
-//       //   //   if (_currentPageIndex == 1)
-//       //   //     Row(
-//       //   //       children: [
-//       //   //         IconButton(
-//       //   //           icon: Icon(Icons.arrow_back),
-//       //   //           onPressed: () {
-//       //   //             _pageController.previousPage(
-//       //   //               duration: Duration(milliseconds: 300),
-//       //   //               curve: Curves.easeInOut,
-//       //   //             );
-//       //   //           },
-//       //   //         ),
-//       //   //         IconButton(
-//       //   //           icon: Icon(Icons.arrow_forward),
-//       //   //           onPressed: () {
-//       //   //             _pageController.animateToPage(
-//       //   //               2,
-//       //   //               duration: Duration(milliseconds: 300),
-//       //   //               curve: Curves.easeInOut,
-//       //   //             );
-//       //   //           },
-//       //   //         ),
-//       //   //       ],
-//       //   //     ),
-//       //   // ],
-//       // ),
-//       body: Container(
-//         width: double.infinity,
-//         decoration: BoxDecoration(
-//           gradient: LinearGradient(
-//             begin: Alignment.topCenter,
-//             end: Alignment.bottomCenter,
-//             colors: [ColorsApp.topClr, ColorsApp.bottomClr],
-//           ),
-//         ),
-//         child: PageView(
-//           controller: _pageController,
-//           onPageChanged: (index) {
-//             setState(() {
-//               _currentPageIndex = index;
-//             });
-//           },
-//           children: [
-//             PageContent(
-//               // iconnext: Icons.school,
-//               iconback: Icons.science,
-//               text: 'Welcome to School App',
-//               buttonText: 'Next',
-//               onPressed: () {
-//                 _pageController.animateToPage(
-//                   1,
-//                   duration: const Duration(milliseconds: 300),
-//                   curve: Curves.easeInOut,
-//                 );
-//               },
-//             ),
-//             PageContent(
-//               // iconnext: Icons.assignment,
-//               text: 'Page 2',
-//               buttonText: 'Next',
-//               onPressed: () {
-//                 // Handle button press for page 2
-//                 _pageController.nextPage(
-//                   duration: const Duration(milliseconds: 300),
-//                   curve: Curves.easeInOut,
-//                 );
-//               },
-//               iconback: Icons.assignment,
-//             ),
-//             PageContent(
-//               // iconnext: Icons.person,
-//               text: 'Page 3',
-//               buttonText: 'Finish',
-//               onPressed: () {
-//                 // Handle button press for page 3
-//               },
-//               iconback: Icons.person,
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// class PageContent extends StatelessWidget {
-//   final IconData iconback;
-//   final String text;
-//   final String buttonText;
-//   final VoidCallback onPressed;
-
-//   const PageContent({
-//     Key? key,
-//     required this.iconback,
-//     required this.text,
-//     required this.buttonText,
-//     required this.onPressed,
-//   }) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       mainAxisAlignment: MainAxisAlignment.center,
-//       crossAxisAlignment: CrossAxisAlignment.center,
-//       children: [
-//         ClipPath(
-//           clipper: HalfCircleClipper(),
-//           child: Container(
-//             height: 400,
-//             color: Colors.white,
-//           ),
-//         ),
-//         Stack(
-//           alignment: Alignment.bottomCenter,
-//           children: [
-//             Container(
-//               decoration: BoxDecoration(
-//                 shape: BoxShape.circle,
-//                 color: ColorsApp.whiteClr,
-//               ),
-//               width: double.infinity,
-//               height: 200,
-//               child: Column(
-//                 children: [
-//                   Text(
-//                     text,
-//                     style: const TextStyle(
-//                       color: Colors.white,
-//                       fontSize: 24,
-//                       fontWeight: FontWeight.bold,
-//                     ),
-//                   ),
-//                   ElevatedButton(
-//                     onPressed: onPressed,
-//                     style: ElevatedButton.styleFrom(
-//                       foregroundColor: Colors.blue.shade900,
-//                       backgroundColor: Colors.white,
-//                       padding: const EdgeInsets.symmetric(
-//                           horizontal: 40, vertical: 12),
-//                       shape: RoundedRectangleBorder(
-//                         borderRadius: BorderRadius.circular(30),
-//                       ),
-//                     ),
-//                     child: Text(
-//                       buttonText,
-//                       style: const TextStyle(
-//                         fontSize: 16,
-//                       ),
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ],
-//         ),
-//       ],
-//     );
-//   }
-// }
-
-// class HalfCircleClipper extends CustomClipper<Path> {
-//   @override
-//   Path getClip(Size size) {
-//     final path = Path();
-//     path.lineTo(0, 0);
-//     path.lineTo(0, size.height);
-//     path.quadraticBezierTo(
-//         size.width / 2, size.height * 0.9, size.width, size.height);
-//     path.lineTo(size.width, 0);
-//     path.close();
-//     return path;
-//   }
-
-//   @override
-//   bool shouldReclip(CustomClipper<Path> oldClipper) {
-//     return false;
-//   }
-// }
-
-// // class WelcomeScreen extends StatelessWidget {
-// //   @override
-// //   Widget build(BuildContext context) {
-// //     return Scaffold(
-// //       body: Container(
-// //         width: double.infinity,
-// //         decoration: BoxDecoration(
-// //           gradient: LinearGradient(
-// //             begin: Alignment.topCenter,
-// //             end: Alignment.bottomCenter,
-// //             colors: [Colors.blue.shade900, Colors.blue.shade300],
-// //           ),
-// //         ),
-// //         child: Column(
-// //           mainAxisAlignment: MainAxisAlignment.center,
-// //           crossAxisAlignment: CrossAxisAlignment.center,
-// //           children: [
-// //             Icon(
-// //               Icons.school,
-// //               size: 80,
-// //               color: Colors.white,
-// //             ),
-// //             SizedBox(height: 20),
-// //             Text(
-// //               'Welcome to School App',
-// //               style: TextStyle(
-// //                 color: Colors.white,
-// //                 fontSize: 24,
-// //                 fontWeight: FontWeight.bold,
-// //               ),
-// //             ),
-// //             SizedBox(height: 20),
-// //             ElevatedButton(
-// //               onPressed: () {
-// //                 // Handle button press
-// //               },
-// //               child: Text(
-// //                 'Get Started',
-// //                 style: TextStyle(
-// //                   fontSize: 16,
-// //                 ),
-// //               ),
-// //               style: ElevatedButton.styleFrom(
-// //                 foregroundColor: Colors.blue.shade900,
-// //                 backgroundColor: Colors.white,
-// //                 padding: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
-// //                 shape: RoundedRectangleBorder(
-// //                   borderRadius: BorderRadius.circular(30),
-// //                 ),
-// //               ),
-// //             ),
-// //           ],
-// //         ),
-// //       ),
-// //     );
-// //   }
-// // }
