@@ -22,6 +22,11 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
   void toggleSelectedUser(int index) {
     setState(() {
       selectedUsers[index] = !selectedUsers[index];
+      if (!selectedUsers[index]) {
+        selectAll = false;
+      } else {
+        selectAll = selectedUsers.every((selected) => selected == true);
+      }
     });
   }
 
@@ -32,6 +37,34 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
     });
   }
 
+  void openAddUserModal() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Add User'),
+          content: SizedBox(
+            height: 400, 
+            child: Container(
+              child: Column(
+                children: [
+                ],
+              ),
+            ),
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context); 
+              },
+              child: Text('Save'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,40 +73,49 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
         title: const Text('User Management'),
         centerTitle: true,
         elevation: 0,
-      ),
-      endDrawer: Drawer(
-        child: ListView(
-          children: [
-            ListTile(
-              leading: Icon(Icons.person_add, color: ColorsApp.blueClr),
-              title: Text(
-                'Add User',
-                style: TextStyle(color: ColorsApp.blueClr),
-              ),
-              onTap: () {
-                // Handle Add User action
+        actions: [
+          if (!selectedUsers.contains(true))
+            IconButton(
+              icon: Icon(Icons.person_add, color: ColorsApp.whiteClr),
+              onPressed: () {
+                openAddUserModal();
               },
             ),
-            ListTile(
-              leading: const Icon(Icons.delete, color: Colors.red),
-              title: const Text(
-                'Delete Selected Users',
-                style: TextStyle(color: Colors.red),
-              ),
-              onTap: () {
-                setState(() {
-                  // Handle Delete Selected Users action
-                  selectedUsers = List.generate(20, (index) => false);
-                });
-                Navigator.pop(context); // Close the drawer
-              },
-            ),
-          ],
-        ),
+        ],
       ),
+      endDrawer: selectedUsers.contains(true)
+          ? Drawer(
+              child: ListView(
+                children: [
+                  ListTile(
+                    leading: Icon(Icons.receipt, color: ColorsApp.blueClr),
+                    title: Text(
+                      'Generate Reports',
+                      style: TextStyle(color: ColorsApp.blueClr),
+                    ),
+                    onTap: () {
+                      // Handle Generate Reports action
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.delete, color: Colors.red),
+                    title: const Text(
+                      'Delete Selected Users',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                    onTap: () {
+                      setState(() {
+                        selectedUsers = List.generate(20, (index) => false);
+                      });
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ),
+            )
+          : null,
       body: Column(
         children: [
-          const SizedBox(height: 20),
           Expanded(
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -81,13 +123,13 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
                 child: DataTableTheme(
                   data: DataTableThemeData(
                     headingRowColor: MaterialStateColor.resolveWith(
-                      (states) => ColorsApp.mainClr,
+                      (states) => ColorsApp.accentClr,
                     ),
                     dataRowColor: MaterialStateColor.resolveWith(
                       (states) => Colors.white,
                     ),
-                    dataTextStyle: TextStyle(color: Colors.black),
-                    headingTextStyle: TextStyle(
+                    dataTextStyle: const TextStyle(color: Colors.black),
+                    headingTextStyle: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
@@ -102,14 +144,17 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
                               onChanged: (value) {
                                 toggleSelectAll();
                               },
+                              activeColor: selectedUsers.contains(false)
+                                  ? Colors.grey
+                                  : ColorsApp.mainClr,
                             ),
-                            Text('Avatar'),
+                            const Text('Avatar'),
                           ],
                         ),
                       ),
-                      DataColumn(label: Text('First Name')),
-                      DataColumn(label: Text('Email')),
-                      DataColumn(label: Text('Actions')),
+                      const DataColumn(label: Text('First Name')),
+                      const DataColumn(label: Text('Email')),
+                      const DataColumn(label: Text('Actions')),
                     ],
                     rows: List.generate(
                       20,
@@ -139,7 +184,7 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
                           ),
                           DataCell(
                             IconButton(
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.delete,
                                 color: Colors.red,
                               ),
@@ -162,19 +207,12 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
 
 
 
-// import 'package:flutter/material.dart';
-// import 'package:school_app/utils/colors.dart';
 
-// class AdminUsersScreen extends StatefulWidget {
-//   const AdminUsersScreen({Key? key}) : super(key: key);
-
-//   @override
-//   _AdminUsersScreenState createState() => _AdminUsersScreenState();
-// }
 
 // class _AdminUsersScreenState extends State<AdminUsersScreen> {
 //   bool isDrawerOpen = false;
-//   List<bool> selectedUsers = List.generate(10, (index) => false);
+//   List<bool> selectedUsers = List.generate(20, (index) => false);
+//   bool selectAll = false;
 
 //   void toggleDrawer() {
 //     setState(() {
@@ -185,6 +223,18 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
 //   void toggleSelectedUser(int index) {
 //     setState(() {
 //       selectedUsers[index] = !selectedUsers[index];
+//       if (!selectedUsers[index]) {
+//         selectAll = false;
+//       } else {
+//         selectAll = selectedUsers.every((selected) => selected == true);
+//       }
+//     });
+//   }
+
+//   void toggleSelectAll() {
+//     setState(() {
+//       selectAll = !selectAll;
+//       selectedUsers = List.generate(20, (index) => selectAll);
 //     });
 //   }
 
@@ -194,8 +244,10 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
 //       appBar: AppBar(
 //         backgroundColor: ColorsApp.mainClr,
 //         title: const Text('User Management'),
+//         centerTitle: true,
+//         elevation: 0,
 //       ),
-//       drawer: Drawer(
+//       endDrawer: Drawer(
 //         child: ListView(
 //           children: [
 //             ListTile(
@@ -204,22 +256,19 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
 //                 'Add User',
 //                 style: TextStyle(color: ColorsApp.blueClr),
 //               ),
-//               onTap: () {
-//                 // Handle Add User action
-//               },
+//               onTap: () {},
 //             ),
 //             ListTile(
-//               leading: Icon(Icons.delete, color: Colors.red),
-//               title: Text(
+//               leading: const Icon(Icons.delete, color: Colors.red),
+//               title: const Text(
 //                 'Delete Selected Users',
 //                 style: TextStyle(color: Colors.red),
 //               ),
 //               onTap: () {
 //                 setState(() {
-//                   // Handle Delete Selected Users action
-//                   selectedUsers = List.generate(10, (index) => false);
+//                   selectedUsers = List.generate(20, (index) => false);
 //                 });
-//                 Navigator.pop(context); // Close the drawer
+//                 Navigator.pop(context);
 //               },
 //             ),
 //           ],
@@ -227,7 +276,6 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
 //       ),
 //       body: Column(
 //         children: [
-//           const SizedBox(height: 20),
 //           Expanded(
 //             child: SingleChildScrollView(
 //               scrollDirection: Axis.horizontal,
@@ -235,29 +283,42 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
 //                 child: DataTableTheme(
 //                   data: DataTableThemeData(
 //                     headingRowColor: MaterialStateColor.resolveWith(
-//                       (states) => ColorsApp.mainClr,
+//                       (states) => ColorsApp.accentClr,
 //                     ),
 //                     dataRowColor: MaterialStateColor.resolveWith(
 //                       (states) => Colors.white,
 //                     ),
-//                     dataTextStyle: TextStyle(color: Colors.black),
-//                     headingTextStyle: TextStyle(
+//                     dataTextStyle: const TextStyle(color: Colors.black),
+//                     headingTextStyle: const TextStyle(
 //                       color: Colors.white,
 //                       fontWeight: FontWeight.bold,
 //                     ),
 //                   ),
 //                   child: DataTable(
 //                     columns: [
-//                       DataColumn(label: Text('First Name')),
-//                       DataColumn(label: Text('Email')),
-//                       DataColumn(label: Text('Actions')),
+//                       DataColumn(
+//                         label: Row(
+//                           children: [
+//                             Checkbox(
+//                               value: selectAll,
+//                               onChanged: (value) {
+//                                 toggleSelectAll();
+//                               },
+//                               activeColor: selectedUsers.contains(false)
+//                                   ? Colors.grey
+//                                   : ColorsApp.mainClr,
+//                             ),
+//                             const Text('Avatar'),
+//                           ],
+//                         ),
+//                       ),
+//                       const DataColumn(label: Text('First Name')),
+//                       const DataColumn(label: Text('Email')),
+//                       const DataColumn(label: Text('Actions')),
 //                     ],
 //                     rows: List.generate(
-//                       10,
+//                       20,
 //                       (index) => DataRow(
-//                         onSelectChanged: (selected) {
-//                           toggleSelectedUser(index);
-//                         },
 //                         cells: [
 //                           DataCell(
 //                             GestureDetector(
@@ -279,8 +340,11 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
 //                             Text('User ${index + 1}'),
 //                           ),
 //                           DataCell(
+//                             Text('user${index + 1}@gmail.com'),
+//                           ),
+//                           DataCell(
 //                             IconButton(
-//                               icon: Icon(
+//                               icon: const Icon(
 //                                 Icons.delete,
 //                                 color: Colors.red,
 //                               ),
@@ -303,6 +367,12 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
 
 
 
+
+
+
+
+
+
 // class AdminUsersScreen extends StatefulWidget {
 //   const AdminUsersScreen({Key? key}) : super(key: key);
 
@@ -313,6 +383,7 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
 // class _AdminUsersScreenState extends State<AdminUsersScreen> {
 //   bool isDrawerOpen = false;
 //   List<bool> selectedUsers = List.generate(20, (index) => false);
+//   bool selectAll = false;
 
 //   void toggleDrawer() {
 //     setState(() {
@@ -323,6 +394,18 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
 //   void toggleSelectedUser(int index) {
 //     setState(() {
 //       selectedUsers[index] = !selectedUsers[index];
+//       if (!selectedUsers[index]) {
+//         selectAll = false;
+//       } else {
+//         selectAll = selectedUsers.every((selected) => selected == true);
+//       }
+//     });
+//   }
+
+//   void toggleSelectAll() {
+//     setState(() {
+//       selectAll = !selectAll;
+//       selectedUsers = List.generate(20, (index) => selectAll);
 //     });
 //   }
 
@@ -367,66 +450,80 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
 //       ),
 //       body: Column(
 //         children: [
-//           const SizedBox(height: 20),
 //           Expanded(
 //             child: SingleChildScrollView(
 //               scrollDirection: Axis.horizontal,
 //               child: SingleChildScrollView(
-//                 child: DataTable(
-//                   columns: [
-//                     DataColumn(
-//                       label: Checkbox(
-//                         value: selectedUsers.every((selected) => selected),
-//                         onChanged: (value) {
-//                           setState(() {
-//                             selectedUsers =
-//                                 List.generate(20, (index) => value!);
-//                           });
-//                         },
-//                       ),
+//                 child: DataTableTheme(
+//                   data: DataTableThemeData(
+//                     headingRowColor: MaterialStateColor.resolveWith(
+//                       (states) => ColorsApp.mainClr,
 //                     ),
-//                     DataColumn(label: Text('Avatar')),
-//                     DataColumn(label: Text('First Name')),
-//                     DataColumn(label: Text('Last Name')),
-//                     DataColumn(label: Text('Actions')),
-//                   ],
-//                   rows: List.generate(
-//                     20,
-//                     (index) => DataRow(
-//                       cells: [
-//                         DataCell(
-//                           Checkbox(
-//                             value: selectedUsers[index],
-//                             onChanged: (value) {
-//                               toggleSelectedUser(index);
-//                             },
-//                           ),
+//                     dataRowColor: MaterialStateColor.resolveWith(
+//                       (states) => Colors.white,
+//                     ),
+//                     dataTextStyle: const TextStyle(color: Colors.black),
+//                     headingTextStyle: const TextStyle(
+//                       color: Colors.white,
+//                       fontWeight: FontWeight.bold,
+//                     ),
+//                   ),
+//                   child: DataTable(
+//                     columns: [
+//                       DataColumn(
+//                         label: Row(
+//                           children: [
+//                             Checkbox(
+//                               value: selectAll,
+//                               onChanged: (value) {
+//                                 toggleSelectAll();
+//                               },
+//                             ),
+//                             const Text('Avatar'),
+//                           ],
 //                         ),
-//                         DataCell(
-//                           CircleAvatar(
-//                             backgroundColor: ColorsApp.mainClr,
-//                             child: Icon(
-//                               Icons.person,
-//                               color: ColorsApp.whiteClr,
+//                       ),
+//                       const DataColumn(label: Text('First Name')),
+//                       const DataColumn(label: Text('Email')),
+//                       const DataColumn(label: Text('Actions')),
+//                     ],
+//                     rows: List.generate(
+//                       20,
+//                       (index) => DataRow(
+//                         cells: [
+//                           DataCell(
+//                             GestureDetector(
+//                               onTap: () {
+//                                 toggleSelectedUser(index);
+//                               },
+//                               child: CircleAvatar(
+//                                 backgroundColor: selectedUsers[index]
+//                                     ? ColorsApp.mainClr
+//                                     : Colors.grey,
+//                                 child: Icon(
+//                                   Icons.person,
+//                                   color: ColorsApp.whiteClr,
+//                                 ),
+//                               ),
 //                             ),
 //                           ),
-//                         ),
-//                         DataCell(
-//                           Text('User ${index + 1}'),
-//                         ),
-//                         DataCell(
-//                           Text('user${index + 1}'),
-//                         ),
-//                         DataCell(
-//                           IconButton(
-//                             icon: Icon(
-//                               Icons.delete,
-//                               color: Colors.red,
-//                             ),
-//                             onPressed: () {},
+//                           DataCell(
+//                             Text('User ${index + 1}'),
 //                           ),
-//                         ),
-//                       ],
+//                           DataCell(
+//                             Text('user${index + 1}@gmail.com'),
+//                           ),
+//                           DataCell(
+//                             IconButton(
+//                               icon: const Icon(
+//                                 Icons.delete,
+//                                 color: Colors.red,
+//                               ),
+//                               onPressed: () {},
+//                             ),
+//                           ),
+//                         ],
+//                       ),
 //                     ),
 //                   ),
 //                 ),
@@ -438,3 +535,5 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
 //     );
 //   }
 // }
+
+
