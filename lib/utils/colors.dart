@@ -6,6 +6,7 @@ class ColorsApp {
   static Color secondClr = colorFromHex('#32357A').withOpacity(0.90);
   static Color threedClr = colorFromHex('#005caa').withOpacity(0.90);
   static Color accentClr = colorFromHex('#FFA200');
+  static Color greenClr = colorFromHex('#377B39');
   static Color whiteClr = Colors.white;
   static Color blackClr = Colors.black;
   static Color greyClr = Colors.grey;

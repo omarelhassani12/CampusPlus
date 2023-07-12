@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:school_app/screens/adminscreens/admin_students_screen.dart';
 import 'package:school_app/screens/adminscreens/admin_users_screen.dart';
 import 'package:school_app/utils/colors.dart';
 import 'package:school_app/widgets/app_logo.dart';
@@ -97,7 +98,13 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                           toastBackgroundColor: ColorsApp.greyClr,
                           toastTextColor: Colors.white,
                           toastMessage: 'Student',
-                          onPressed: () {},
+                          onPressed: () {
+                             Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>   AdminStudentsScreen()),
+                            );
+                          },
                         ),
                         LongPressButton(
                           icon: Icons.person,

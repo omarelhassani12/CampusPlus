@@ -1,5 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:school_app/models/user.dart';
+import 'package:school_app/screens/adminscreens/admin_user_details_screen.dart';
 import 'package:school_app/utils/colors.dart';
+import 'package:school_app/widgets/button_widget.dart';
+import 'package:school_app/widgets/text_form_field.dart';
 
 class AdminUsersScreen extends StatefulWidget {
   const AdminUsersScreen({Key? key}) : super(key: key);
@@ -37,31 +43,85 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
     });
   }
 
-  void openAddUserModal() {
+  void AddUserModal() {
+    String generatePassword() {
+      String letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      Random random = Random();
+      String password = 'CampusPlus';
+      for (int i = 0; i < 6; i++) {
+        password += letters[random.nextInt(letters.length)];
+      }
+      return password;
+    }
+
+    String generatedPassword = generatePassword();
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Add User'),
-          content: SizedBox(
-            height: 400, 
-            child: Container(
-              child: Column(
-                children: [
-                ],
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text('New User'),
+              IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+          content: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: SizedBox(
+                height: 250,
+                child: Container(
+                  child: Column(
+                    children: [
+                      const MainTextFormField(
+                        labelText: 'First Name',
+                      ),
+                      const MainTextFormField(
+                        labelText: 'Last Name',
+                      ),
+                      const MainTextFormField(
+                        labelText: 'Email',
+                      ),
+                      MainTextFormField(
+                        labelText: 'Generated Password',
+                        initialValue: generatedPassword,
+                        enabled: false,
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
           actions: [
-            ElevatedButton(
+            MainButton(
+              buttonText: "Save",
               onPressed: () {
-                Navigator.pop(context); 
+                Navigator.pop(context);
               },
-              child: Text('Save'),
-            ),
+            )
           ],
         );
       },
+    );
+  }
+
+  void navigateToUserDetails(int index) {
+    User selectedUser = userList[index];
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => UserDetailsScreen(user: selectedUser),
+      ),
     );
   }
 
@@ -78,7 +138,7 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
             IconButton(
               icon: Icon(Icons.person_add, color: ColorsApp.whiteClr),
               onPressed: () {
-                openAddUserModal();
+                AddUserModal();
               },
             ),
         ],
@@ -157,7 +217,7 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
                       const DataColumn(label: Text('Actions')),
                     ],
                     rows: List.generate(
-                      20,
+                      10,
                       (index) => DataRow(
                         cells: [
                           DataCell(
@@ -177,10 +237,20 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
                             ),
                           ),
                           DataCell(
-                            Text('User ${index + 1}'),
+                            GestureDetector(
+                              onTap: () {
+                                navigateToUserDetails(index);
+                              },
+                              child: Text(userList[index].firstName),
+                            ),
                           ),
                           DataCell(
-                            Text('user${index + 1}@gmail.com'),
+                            GestureDetector(
+                              onTap: () {
+                                navigateToUserDetails(index);
+                              },
+                              child: Text(userList[index].email),
+                            ),
                           ),
                           DataCell(
                             IconButton(
@@ -204,336 +274,3 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
     );
   }
 }
-
-
-
-
-
-// class _AdminUsersScreenState extends State<AdminUsersScreen> {
-//   bool isDrawerOpen = false;
-//   List<bool> selectedUsers = List.generate(20, (index) => false);
-//   bool selectAll = false;
-
-//   void toggleDrawer() {
-//     setState(() {
-//       isDrawerOpen = !isDrawerOpen;
-//     });
-//   }
-
-//   void toggleSelectedUser(int index) {
-//     setState(() {
-//       selectedUsers[index] = !selectedUsers[index];
-//       if (!selectedUsers[index]) {
-//         selectAll = false;
-//       } else {
-//         selectAll = selectedUsers.every((selected) => selected == true);
-//       }
-//     });
-//   }
-
-//   void toggleSelectAll() {
-//     setState(() {
-//       selectAll = !selectAll;
-//       selectedUsers = List.generate(20, (index) => selectAll);
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         backgroundColor: ColorsApp.mainClr,
-//         title: const Text('User Management'),
-//         centerTitle: true,
-//         elevation: 0,
-//       ),
-//       endDrawer: Drawer(
-//         child: ListView(
-//           children: [
-//             ListTile(
-//               leading: Icon(Icons.person_add, color: ColorsApp.blueClr),
-//               title: Text(
-//                 'Add User',
-//                 style: TextStyle(color: ColorsApp.blueClr),
-//               ),
-//               onTap: () {},
-//             ),
-//             ListTile(
-//               leading: const Icon(Icons.delete, color: Colors.red),
-//               title: const Text(
-//                 'Delete Selected Users',
-//                 style: TextStyle(color: Colors.red),
-//               ),
-//               onTap: () {
-//                 setState(() {
-//                   selectedUsers = List.generate(20, (index) => false);
-//                 });
-//                 Navigator.pop(context);
-//               },
-//             ),
-//           ],
-//         ),
-//       ),
-//       body: Column(
-//         children: [
-//           Expanded(
-//             child: SingleChildScrollView(
-//               scrollDirection: Axis.horizontal,
-//               child: SingleChildScrollView(
-//                 child: DataTableTheme(
-//                   data: DataTableThemeData(
-//                     headingRowColor: MaterialStateColor.resolveWith(
-//                       (states) => ColorsApp.accentClr,
-//                     ),
-//                     dataRowColor: MaterialStateColor.resolveWith(
-//                       (states) => Colors.white,
-//                     ),
-//                     dataTextStyle: const TextStyle(color: Colors.black),
-//                     headingTextStyle: const TextStyle(
-//                       color: Colors.white,
-//                       fontWeight: FontWeight.bold,
-//                     ),
-//                   ),
-//                   child: DataTable(
-//                     columns: [
-//                       DataColumn(
-//                         label: Row(
-//                           children: [
-//                             Checkbox(
-//                               value: selectAll,
-//                               onChanged: (value) {
-//                                 toggleSelectAll();
-//                               },
-//                               activeColor: selectedUsers.contains(false)
-//                                   ? Colors.grey
-//                                   : ColorsApp.mainClr,
-//                             ),
-//                             const Text('Avatar'),
-//                           ],
-//                         ),
-//                       ),
-//                       const DataColumn(label: Text('First Name')),
-//                       const DataColumn(label: Text('Email')),
-//                       const DataColumn(label: Text('Actions')),
-//                     ],
-//                     rows: List.generate(
-//                       20,
-//                       (index) => DataRow(
-//                         cells: [
-//                           DataCell(
-//                             GestureDetector(
-//                               onTap: () {
-//                                 toggleSelectedUser(index);
-//                               },
-//                               child: CircleAvatar(
-//                                 backgroundColor: selectedUsers[index]
-//                                     ? ColorsApp.mainClr
-//                                     : Colors.grey,
-//                                 child: Icon(
-//                                   Icons.person,
-//                                   color: ColorsApp.whiteClr,
-//                                 ),
-//                               ),
-//                             ),
-//                           ),
-//                           DataCell(
-//                             Text('User ${index + 1}'),
-//                           ),
-//                           DataCell(
-//                             Text('user${index + 1}@gmail.com'),
-//                           ),
-//                           DataCell(
-//                             IconButton(
-//                               icon: const Icon(
-//                                 Icons.delete,
-//                                 color: Colors.red,
-//                               ),
-//                               onPressed: () {},
-//                             ),
-//                           ),
-//                         ],
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
-
-
-
-
-
-
-
-
-// class AdminUsersScreen extends StatefulWidget {
-//   const AdminUsersScreen({Key? key}) : super(key: key);
-
-//   @override
-//   _AdminUsersScreenState createState() => _AdminUsersScreenState();
-// }
-
-// class _AdminUsersScreenState extends State<AdminUsersScreen> {
-//   bool isDrawerOpen = false;
-//   List<bool> selectedUsers = List.generate(20, (index) => false);
-//   bool selectAll = false;
-
-//   void toggleDrawer() {
-//     setState(() {
-//       isDrawerOpen = !isDrawerOpen;
-//     });
-//   }
-
-//   void toggleSelectedUser(int index) {
-//     setState(() {
-//       selectedUsers[index] = !selectedUsers[index];
-//       if (!selectedUsers[index]) {
-//         selectAll = false;
-//       } else {
-//         selectAll = selectedUsers.every((selected) => selected == true);
-//       }
-//     });
-//   }
-
-//   void toggleSelectAll() {
-//     setState(() {
-//       selectAll = !selectAll;
-//       selectedUsers = List.generate(20, (index) => selectAll);
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         backgroundColor: ColorsApp.mainClr,
-//         title: const Text('User Management'),
-//         centerTitle: true,
-//         elevation: 0,
-//       ),
-//       endDrawer: Drawer(
-//         child: ListView(
-//           children: [
-//             ListTile(
-//               leading: Icon(Icons.person_add, color: ColorsApp.blueClr),
-//               title: Text(
-//                 'Add User',
-//                 style: TextStyle(color: ColorsApp.blueClr),
-//               ),
-//               onTap: () {
-//                 // Handle Add User action
-//               },
-//             ),
-//             ListTile(
-//               leading: const Icon(Icons.delete, color: Colors.red),
-//               title: const Text(
-//                 'Delete Selected Users',
-//                 style: TextStyle(color: Colors.red),
-//               ),
-//               onTap: () {
-//                 setState(() {
-//                   // Handle Delete Selected Users action
-//                   selectedUsers = List.generate(20, (index) => false);
-//                 });
-//                 Navigator.pop(context); // Close the drawer
-//               },
-//             ),
-//           ],
-//         ),
-//       ),
-//       body: Column(
-//         children: [
-//           Expanded(
-//             child: SingleChildScrollView(
-//               scrollDirection: Axis.horizontal,
-//               child: SingleChildScrollView(
-//                 child: DataTableTheme(
-//                   data: DataTableThemeData(
-//                     headingRowColor: MaterialStateColor.resolveWith(
-//                       (states) => ColorsApp.mainClr,
-//                     ),
-//                     dataRowColor: MaterialStateColor.resolveWith(
-//                       (states) => Colors.white,
-//                     ),
-//                     dataTextStyle: const TextStyle(color: Colors.black),
-//                     headingTextStyle: const TextStyle(
-//                       color: Colors.white,
-//                       fontWeight: FontWeight.bold,
-//                     ),
-//                   ),
-//                   child: DataTable(
-//                     columns: [
-//                       DataColumn(
-//                         label: Row(
-//                           children: [
-//                             Checkbox(
-//                               value: selectAll,
-//                               onChanged: (value) {
-//                                 toggleSelectAll();
-//                               },
-//                             ),
-//                             const Text('Avatar'),
-//                           ],
-//                         ),
-//                       ),
-//                       const DataColumn(label: Text('First Name')),
-//                       const DataColumn(label: Text('Email')),
-//                       const DataColumn(label: Text('Actions')),
-//                     ],
-//                     rows: List.generate(
-//                       20,
-//                       (index) => DataRow(
-//                         cells: [
-//                           DataCell(
-//                             GestureDetector(
-//                               onTap: () {
-//                                 toggleSelectedUser(index);
-//                               },
-//                               child: CircleAvatar(
-//                                 backgroundColor: selectedUsers[index]
-//                                     ? ColorsApp.mainClr
-//                                     : Colors.grey,
-//                                 child: Icon(
-//                                   Icons.person,
-//                                   color: ColorsApp.whiteClr,
-//                                 ),
-//                               ),
-//                             ),
-//                           ),
-//                           DataCell(
-//                             Text('User ${index + 1}'),
-//                           ),
-//                           DataCell(
-//                             Text('user${index + 1}@gmail.com'),
-//                           ),
-//                           DataCell(
-//                             IconButton(
-//                               icon: const Icon(
-//                                 Icons.delete,
-//                                 color: Colors.red,
-//                               ),
-//                               onPressed: () {},
-//                             ),
-//                           ),
-//                         ],
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
-
