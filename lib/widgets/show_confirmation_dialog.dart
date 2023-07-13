@@ -20,8 +20,6 @@ void showConfirmationDialog(BuildContext context, userName) {
           ),
           TextButton(
             onPressed: () {
-              // Perform the delete operation
-              // Add your delete logic here
               Navigator.of(context).pop();
             },
             child: Text(

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:school_app/screens/adminscreens/admin_students_screen.dart';
-import 'package:school_app/screens/adminscreens/admin_users_screen.dart';
-import 'package:school_app/utils/colors.dart';
-import 'package:school_app/widgets/app_logo.dart';
-import 'package:school_app/widgets/button_widget.dart';
-import 'package:school_app/widgets/long_press_button.dart';
-import 'package:school_app/widgets/statistic_card.dart';
+import '../../screens/adminscreens/admin_users_screen.dart';
+import '../../screens/adminscreens/admin_students_screen.dart';
+import '../../screens/adminscreens/admin_courses_screen.dart';
+import '../../utils/colors.dart';
+import '../../widgets/app_logo.dart';
+import '../../widgets/button_widget.dart';
+import '../../widgets/long_press_button.dart';
+import '../../widgets/statistic_card.dart';
 
 class AdminHomeScreen extends StatefulWidget {
   const AdminHomeScreen({Key? key}) : super(key: key);
@@ -85,7 +86,8 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>  const AdminUsersScreen()),
+                                  builder: (context) =>
+                                      const AdminUsersScreen()),
                             );
                           },
                         ),
@@ -99,10 +101,11 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                           toastTextColor: Colors.white,
                           toastMessage: 'Student',
                           onPressed: () {
-                             Navigator.push(
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>   const AdminStudentsScreen()),
+                                  builder: (context) =>
+                                      const AdminStudentsScreen()),
                             );
                           },
                         ),
@@ -114,7 +117,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                           buttonTextColor: Colors.white,
                           toastBackgroundColor: ColorsApp.greyClr,
                           toastTextColor: Colors.white,
-                          toastMessage: 'Person',
+                          toastMessage: 'Staff',
                           onPressed: () {},
                         ),
                         LongPressButton(
@@ -126,7 +129,13 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                           toastBackgroundColor: ColorsApp.greyClr,
                           toastTextColor: Colors.white,
                           toastMessage: 'Courses',
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const AdminCoursesScreen()),
+                            );
+                          },
                         ),
                       ],
                     ),
