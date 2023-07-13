@@ -1,20 +1,20 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:school_app/models/user.dart';
-import 'package:school_app/screens/adminscreens/admin_user_details_screen.dart';
-import 'package:school_app/utils/colors.dart';
-import 'package:school_app/widgets/button_widget.dart';
-import 'package:school_app/widgets/text_form_field.dart';
+import '../../models/user.dart';
+import '../../screens/adminscreens/admin_user_details_screen.dart';
+import '../../utils/colors.dart';
+import '../../widgets/button_widget.dart';
+import '../../widgets/text_form_field.dart';
+import '../../widgets/show_confirmation_dialog.dart';
 
 class AdminUsersScreen extends StatefulWidget {
   const AdminUsersScreen({Key? key}) : super(key: key);
 
   @override
-  _AdminUsersScreenState createState() => _AdminUsersScreenState();
+  AdminUsersScreenState createState() => AdminUsersScreenState();
 }
 
-class _AdminUsersScreenState extends State<AdminUsersScreen> {
+class AdminUsersScreenState extends State<AdminUsersScreen> {
   bool isDrawerOpen = false;
   List<bool> selectedUsers = List.generate(20, (index) => false);
   bool selectAll = false;
@@ -43,6 +43,7 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
     });
   }
 
+  // ignore: non_constant_identifier_names
   void AddUserModal() {
     String generatePassword() {
       String letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -78,25 +79,23 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
                   bottom: MediaQuery.of(context).viewInsets.bottom),
               child: SizedBox(
                 height: 250,
-                child: Container(
-                  child: Column(
-                    children: [
-                      const MainTextFormField(
-                        labelText: 'First Name',
-                      ),
-                      const MainTextFormField(
-                        labelText: 'Last Name',
-                      ),
-                      const MainTextFormField(
-                        labelText: 'Email',
-                      ),
-                      MainTextFormField(
-                        labelText: 'Generated Password',
-                        initialValue: generatedPassword,
-                        enabled: false,
-                      ),
-                    ],
-                  ),
+                child: Column(
+                  children: [
+                    const MainTextFormField(
+                      labelText: 'First Name',
+                    ),
+                    const MainTextFormField(
+                      labelText: 'Last Name',
+                    ),
+                    const MainTextFormField(
+                      labelText: 'Email',
+                    ),
+                    MainTextFormField(
+                      labelText: 'Generated Password',
+                      initialValue: generatedPassword,
+                      enabled: false,
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -258,7 +257,9 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
                                 Icons.delete,
                                 color: Colors.red,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                showConfirmationDialog(context, "user");
+                              },
                             ),
                           ),
                         ],

@@ -1,15 +1,16 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:school_app/models/student.dart';
-import 'package:school_app/utils/colors.dart';
-import 'package:school_app/widgets/button_widget.dart';
-import 'package:school_app/widgets/text_form_field.dart';
+import '../../models/student.dart';
+import '../../utils/colors.dart';
+import '../../widgets/button_widget.dart';
+import '../../widgets/show_confirmation_dialog.dart';
+import '../../widgets/text_form_field.dart';
 
 class AdminStudentsScreen extends StatefulWidget {
   const AdminStudentsScreen({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<AdminStudentsScreen> createState() => _AdminStudentsScreenState();
@@ -17,6 +18,7 @@ class AdminStudentsScreen extends StatefulWidget {
 
 class _AdminStudentsScreenState extends State<AdminStudentsScreen> {
   List<bool> selectedColumns = [];
+  List<Student> selectedUsers = [];
 
   void importExcelFile() {
     selectedColumns = List.generate(9, (index) => false);
@@ -148,7 +150,7 @@ class _AdminStudentsScreenState extends State<AdminStudentsScreen> {
     );
   }
 
-  void AddUserModal() {
+  void addUserModal() {
     String generatePassword() {
       String letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
       Random random = Random();
@@ -180,39 +182,38 @@ class _AdminStudentsScreenState extends State<AdminStudentsScreen> {
           content: SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom),
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+              ),
               child: SizedBox(
                 height: 250,
-                child: Container(
-                  child: Column(
-                    children: [
-                      const MainTextFormField(
-                        labelText: 'First Name',
-                      ),
-                      const MainTextFormField(
-                        labelText: 'Last Name',
-                      ),
-                      const MainTextFormField(
-                        labelText: 'Email',
-                      ),
-                      MainTextFormField(
-                        labelText: 'Generated Password',
-                        initialValue: generatedPassword,
-                        enabled: false,
-                      ),
-                    ],
-                  ),
+                child: Column(
+                  children: [
+                    const MainTextFormField(
+                      labelText: 'First Name',
+                    ),
+                    const MainTextFormField(
+                      labelText: 'Last Name',
+                    ),
+                    const MainTextFormField(
+                      labelText: 'Email',
+                    ),
+                    MainTextFormField(
+                      labelText: 'Generated Password',
+                      initialValue: generatedPassword,
+                      enabled: false,
+                    ),
+                  ],
                 ),
               ),
             ),
           ),
           actions: [
             MainButton(
-              buttonText: "Save",
+              buttonText: 'Save',
               onPressed: () {
                 Navigator.pop(context);
               },
-            )
+            ),
           ],
         );
       },
@@ -238,12 +239,25 @@ class _AdminStudentsScreenState extends State<AdminStudentsScreen> {
             ),
             title: Text('${student.firstName} ${student.lastName}'),
             subtitle: Text(student.email),
-            trailing: IconButton(
-              icon: const Icon(
-                Icons.delete,
-                color: Colors.red,
+            trailing: GestureDetector(
+              onLongPress: () {
+                setState(() {
+                  selectedUsers.add(student);
+                });
+              },
+              child: IconButton(
+                icon: const Icon(
+                  Icons.delete,
+                  color: Colors.red,
+                ),
+                onPressed: () {
+                  if (selectedUsers.isEmpty) {
+                    showConfirmationDialog(context, 'student');
+                  } else {
+                    // Delete selected users
+                  }
+                },
               ),
-              onPressed: () {},
             ),
             onTap: () {},
           );
@@ -259,7 +273,7 @@ class _AdminStudentsScreenState extends State<AdminStudentsScreen> {
             context: context,
             builder: (BuildContext context) {
               return Wrap(
-                children: <Widget>[
+                children: [
                   ListTile(
                     leading: Icon(
                       Icons.file_upload,
@@ -267,9 +281,7 @@ class _AdminStudentsScreenState extends State<AdminStudentsScreen> {
                     ),
                     title: const Text('Import Excel File'),
                     onTap: () {
-                      // Handle import Excel file action
                       Navigator.pop(context);
-                      // Call a function to handle importing the Excel file
                       importExcelFile();
                     },
                   ),
@@ -280,10 +292,8 @@ class _AdminStudentsScreenState extends State<AdminStudentsScreen> {
                     ),
                     title: const Text('Add Single User'),
                     onTap: () {
-                      // Handle add single user action
                       Navigator.pop(context);
-                      // Call a function to navigate to the add user screen
-                      AddUserModal();
+                      addUserModal();
                     },
                   ),
                 ],

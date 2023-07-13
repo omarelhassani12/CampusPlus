@@ -1,10 +1,9 @@
-
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:school_app/widgets/button_widget.dart';
 import 'package:school_app/widgets/text_form_field.dart';
 
-
+class AddUserModal extends StatelessWidget {
   const AddUserModal({Key? key}) : super(key: key);
 
   @override
@@ -36,25 +35,23 @@ import 'package:school_app/widgets/text_form_field.dart';
       ),
       content: SizedBox(
         height: 250,
-        child: Container(
-          child: Column(
-            children: [
-              const MainTextFormField(
-                labelText: 'First Name',
-              ),
-              const MainTextFormField(
-                labelText: 'Last Name',
-              ),
-              const MainTextFormField(
-                labelText: 'Email',
-              ),
-              MainTextFormField(
-                labelText: 'Generated Password',
-                initialValue: generatedPassword,
-                enabled: false,
-              ),
-            ],
-          ),
+        child: Column(
+          children: [
+            const MainTextFormField(
+              labelText: 'First Name',
+            ),
+            const MainTextFormField(
+              labelText: 'Last Name',
+            ),
+            const MainTextFormField(
+              labelText: 'Email',
+            ),
+            MainTextFormField(
+              labelText: 'Generated Password',
+              initialValue: generatedPassword,
+              enabled: false,
+            ),
+          ],
         ),
       ),
       actions: [
