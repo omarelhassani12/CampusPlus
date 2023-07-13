@@ -7,6 +7,7 @@ import '../../widgets/app_logo.dart';
 import '../../widgets/button_widget.dart';
 import '../../widgets/long_press_button.dart';
 import '../../widgets/statistic_card.dart';
+import 'admin_teachers_screen.dart';
 
 class AdminHomeScreen extends StatefulWidget {
   const AdminHomeScreen({Key? key}) : super(key: key);
@@ -27,12 +28,12 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         title: Row(
           children: [
             Text(
-              'Welcome firstname !',
+              'CampusPlus',
               style: TextStyle(
                 color: ColorsApp.mainClr,
               ),
             ),
-            const SizedBox(width: 91),
+            const Spacer(),
             const AppLogo(
               size: 80,
             ),
@@ -99,7 +100,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                           buttonTextColor: Colors.white,
                           toastBackgroundColor: ColorsApp.greyClr,
                           toastTextColor: Colors.white,
-                          toastMessage: 'Student',
+                          toastMessage: 'Students',
                           onPressed: () {
                             Navigator.push(
                               context,
@@ -117,8 +118,15 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                           buttonTextColor: Colors.white,
                           toastBackgroundColor: ColorsApp.greyClr,
                           toastTextColor: Colors.white,
-                          toastMessage: 'Staff',
-                          onPressed: () {},
+                          toastMessage: 'Teacher',
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const AdminTeachersScreen()),
+                            );
+                          },
                         ),
                         LongPressButton(
                           icon: Icons.book,
@@ -133,7 +141,8 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const AdminCoursesScreen()),
+                                  builder: (context) =>
+                                      const AdminCoursesScreen()),
                             );
                           },
                         ),
@@ -200,7 +209,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                             },
                             child: StatisticCard(
                               icon: Icons.person,
-                              title: 'Staff',
+                              title: 'Teachers',
                               count: '50',
                               isSelected: selectedCardIndex == 2,
                             ),
@@ -256,7 +265,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                           ),
                         if (selectedCardIndex == 2)
                           MainButton(
-                            buttonText: 'Generate Staff Reports',
+                            buttonText: 'Generate Teachers Reports',
                             onPressed: () {},
                           ),
                         if (selectedCardIndex == 3)

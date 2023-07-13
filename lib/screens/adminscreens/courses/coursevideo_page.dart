@@ -54,7 +54,7 @@ class CourseVideoPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Course Video Page',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
@@ -62,7 +62,7 @@ class CourseVideoPage extends StatelessWidget {
             if (videoUrl.isNotEmpty)
               Text(videoUrl)
             else
-              Text('No video available.'),
+              const Text('No video available.'),
           ],
         ),
       ),

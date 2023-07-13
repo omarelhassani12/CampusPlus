@@ -39,14 +39,14 @@ class _RoleSelectionPageState extends State<RoleSelectionPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   RoleOptionCard(
-                    role: 'Staff',
-                    image: 'assets/images/staff.png',
+                    role: 'Teacher',
+                    image: 'assets/images/teacher.png',
                     onPressed: () {
                       setState(() {
-                        selectedRole = 'Staff';
+                        selectedRole = 'Teacher';
                       });
                     },
-                    selected: selectedRole == 'Staff',
+                    selected: selectedRole == 'Teacher',
                   ),
                   const SizedBox(width: 20),
                   RoleOptionCard(
@@ -71,7 +71,7 @@ class _RoleSelectionPageState extends State<RoleSelectionPage> {
                       MaterialPageRoute(
                           builder: (context) => const AdminSignupPage()),
                     );
-                  } else if (selectedRole == "Staff") {
+                  } else if (selectedRole == "Teacher") {
                     Navigator.push(
                       context,
                       MaterialPageRoute(

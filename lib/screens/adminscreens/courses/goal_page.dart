@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 
 class CourseGoalPage extends StatelessWidget {
   final List<String> goals;
-  final String duration;
 
-  CourseGoalPage({Key? key, required this.goals, required this.duration})
-      : super(key: key);
+  const CourseGoalPage({Key? key, required this.goals}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: double.infinity,
       child: SingleChildScrollView(
         child: Padding(
@@ -17,14 +15,6 @@ class CourseGoalPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Duration: $duration',
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 16.0),
               if (goals.isNotEmpty)
                 ListView.builder(
                   shrinkWrap: true,
@@ -36,7 +26,7 @@ class CourseGoalPage extends StatelessWidget {
                   },
                 )
               else
-                Text('No goals available.'),
+                const Text('No goals available.'),
             ],
           ),
         ),
