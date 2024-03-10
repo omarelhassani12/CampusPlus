@@ -23,7 +23,15 @@ class CourseCard extends StatelessWidget {
           onTap: () {
             navigateToCourseDetails(context);
           },
-          child: Image.asset(course.imageUrl),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10.0),
+            child: Image.asset(
+              course.imageUrl,
+              width: 60,
+              height: 100,
+              fit: BoxFit.cover,
+            ),
+          ),
         ),
         title: GestureDetector(
           onTap: () {

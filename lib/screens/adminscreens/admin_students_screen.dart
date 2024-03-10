@@ -224,7 +224,11 @@ class _AdminStudentsScreenState extends State<AdminStudentsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Student Management'),
+        title: const Text(
+          'Student Management',
+          style: TextStyle(color: Colors.white),
+        ),
+        iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: ColorsApp.mainClr,
         centerTitle: true,
         elevation: 0,
@@ -267,6 +271,7 @@ class _AdminStudentsScreenState extends State<AdminStudentsScreen> {
         backgroundColor: ColorsApp.mainClr,
         child: const Icon(
           Icons.add,
+          color: Colors.white,
         ),
         onPressed: () {
           showModalBottomSheet(

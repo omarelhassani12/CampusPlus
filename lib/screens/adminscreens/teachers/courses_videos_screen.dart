@@ -3,16 +3,21 @@ import 'package:flutter/material.dart';
 import '../../../utils/colors.dart';
 
 class VideoScreen extends StatelessWidget {
+  const VideoScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: GridView.count(
         crossAxisCount: 3,
-        padding: EdgeInsets.all(16.0),
-        children: [
-          VideoItemWidget(videoUrl: 'video_url_1'),
-          VideoItemWidget(videoUrl: 'video_url_2'),
-          VideoItemWidget(videoUrl: 'video_url_3'),
+        padding: const EdgeInsets.all(16.0),
+        children: const [
+          VideoItemWidget(
+              videoUrl: 'video_url_1', imagePath: 'assets/videos/video1.png'),
+          VideoItemWidget(
+              videoUrl: 'video_url_2', imagePath: 'assets/videos/video2.png'),
+          VideoItemWidget(
+              videoUrl: 'video_url_3', imagePath: 'assets/videos/video3.png'),
         ],
       ),
     );
@@ -21,27 +26,34 @@ class VideoScreen extends StatelessWidget {
 
 class VideoItemWidget extends StatelessWidget {
   final String videoUrl;
+  final String imagePath;
 
-  const VideoItemWidget({required this.videoUrl});
+  const VideoItemWidget(
+      {Key? key, required this.videoUrl, required this.imagePath})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        // Handle video item click
-      },
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20.0),
-        child: Container(
-          margin: EdgeInsets.all(8.0),
-          color: Colors.grey[200],
-          child: Center(
-            child: Text(
-              'Video 1',
-              style: TextStyle(fontSize: 18.0),
+      onTap: () {},
+      child: Stack(
+        children: [
+          Image.asset(
+            imagePath,
+            width: 100,
+            height: 100,
+          ),
+          Positioned.fill(
+            child: Align(
+              alignment: Alignment.center,
+              child: Icon(
+                Icons.play_circle_filled,
+                size: 30,
+                color: ColorsApp.whiteClr,
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

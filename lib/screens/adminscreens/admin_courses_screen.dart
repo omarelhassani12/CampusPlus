@@ -12,8 +12,6 @@ class AdminCoursesScreen extends StatefulWidget {
 }
 
 class _AdminCoursesScreenState extends State<AdminCoursesScreen> {
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +63,10 @@ class _AdminCoursesScreenState extends State<AdminCoursesScreen> {
           // Navigate to add course screen
         },
         backgroundColor: ColorsApp.accentClr,
-        child: const Icon(Icons.add),
+        child: Icon(
+          Icons.add,
+          color: ColorsApp.whiteClr,
+        ),
       ),
     );
   }

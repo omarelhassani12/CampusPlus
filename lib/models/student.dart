@@ -26,13 +26,12 @@ class Student {
   });
 }
 
-
 List<Student> students = [
   Student(
     id: '1',
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'john.doe@example.com',
+    firstName: 'Ali',
+    lastName: 'Ahmed',
+    email: 'ali.ahmed@example.com',
     avatarImage: 'assets/images/avatar1.png',
     phone: '123456789',
     dateOfBirth: '1998-05-10',
@@ -43,9 +42,9 @@ List<Student> students = [
   ),
   Student(
     id: '2',
-    firstName: 'Jane',
-    lastName: 'Smith',
-    email: 'jane.smith@example.com',
+    firstName: 'Fatima',
+    lastName: 'Ali',
+    email: 'fatima.ali@example.com',
     avatarImage: 'assets/images/avatar2.png',
     phone: '987654321',
     dateOfBirth: '1999-09-15',
@@ -56,9 +55,9 @@ List<Student> students = [
   ),
   Student(
     id: '3',
-    firstName: 'David',
-    lastName: 'Johnson',
-    email: 'david.johnson@example.com',
+    firstName: 'Mohammed',
+    lastName: 'Hassan',
+    email: 'mohammed.hassan@example.com',
     avatarImage: 'assets/images/avatar3.png',
     phone: '456789123',
     dateOfBirth: '1997-12-20',
@@ -69,9 +68,9 @@ List<Student> students = [
   ),
   Student(
     id: '4',
-    firstName: 'Sarah',
-    lastName: 'Williams',
-    email: 'sarah.williams@example.com',
+    firstName: 'Aisha',
+    lastName: 'Omar',
+    email: 'aisha.omar@example.com',
     avatarImage: 'assets/images/avatar4.png',
     phone: '321654987',
     dateOfBirth: '2000-03-05',
@@ -82,9 +81,9 @@ List<Student> students = [
   ),
   Student(
     id: '5',
-    firstName: 'Michael',
-    lastName: 'Brown',
-    email: 'michael.brown@example.com',
+    firstName: 'Mohammed',
+    lastName: 'Abdelaziz',
+    email: 'mohammed.abdelaziz@example.com',
     avatarImage: 'assets/images/avatar5.png',
     phone: '789123456',
     dateOfBirth: '1999-07-25',
@@ -95,9 +94,9 @@ List<Student> students = [
   ),
   Student(
     id: '6',
-    firstName: 'Emily',
-    lastName: 'Davis',
-    email: 'emily.davis@example.com',
+    firstName: 'Nour',
+    lastName: 'Mohammed',
+    email: 'nour.mohammed@example.com',
     avatarImage: 'assets/images/avatar6.png',
     phone: '654987321',
     dateOfBirth: '1998-09-12',

@@ -165,18 +165,21 @@ class PageContent extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 25),
+                  const SizedBox(height: 2),
                   Expanded(
                     flex: 1,
                     child: Center(
-                      child: Text(
-                        textcontent,
-                        style: TextStyle(
-                          color: ColorsApp.greyClr,
-                          fontSize: 15,
-                          fontWeight: FontWeight.normal,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Text(
+                          textcontent,
+                          style: TextStyle(
+                            color: ColorsApp.greyClr,
+                            fontSize: 15,
+                            fontWeight: FontWeight.normal,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                        textAlign: TextAlign.center,
                       ),
                     ),
                   ),

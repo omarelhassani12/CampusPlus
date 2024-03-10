@@ -25,139 +25,141 @@ class _TeacherDetailsScreenState extends State<TeacherDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Teacher Details'),
+        title: const Text(
+          'Teacher Details',
+          style: TextStyle(color: Colors.white),
+        ),
+        centerTitle: true,
+        iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: ColorsApp.mainClr,
         elevation: 0,
       ),
-      body: Container(
-        child: Column(
-          children: [
-            // First Half: 30%
-            Expanded(
-              flex: 3,
-              child: Container(
-                color: Colors.grey[200],
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      color: ColorsApp.accentClr,
-                      padding: EdgeInsets.all(16.0),
-                      child: Row(
-                        children: [
-                          CircleAvatar(
-                            backgroundImage:
-                                AssetImage(widget.teacher.imageUrl),
-                            backgroundColor: ColorsApp.whiteClr,
-                            radius: 40,
-                          ),
-                          SizedBox(width: 16),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  widget.teacher.name,
-                                  style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                SizedBox(height: 8),
-                                Row(
-                                  children: [
-                                    Text(
-                                      widget.teacher.subject,
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    Spacer(),
-                                    Text(
-                                      '${widget.teacher.courseCount} Courses',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding:
-                          EdgeInsets.only(right: 16.0, left: 16.0, top: 8.0),
-                      child: Container(
-                        color: ColorsApp.whiteClr,
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+      body: Column(
+        children: [
+          // First Half: 30%
+          Expanded(
+            flex: 3,
+            child: Container(
+              color: Colors.grey[200],
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    color: ColorsApp.accentClr,
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          backgroundImage: AssetImage(widget.teacher.imageUrl),
+                          backgroundColor: ColorsApp.whiteClr,
+                          radius: 40,
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              LinkButton(
-                                onPressed: () {
-                                  setState(() {
-                                    _currentPageIndex = 0;
-                                  });
-                                },
-                                title: 'Watch Videos',
-                                isSelected: _currentPageIndex == 0,
+                              Text(
+                                widget.teacher.name,
+                                style: const TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
                               ),
-                              SizedBox(width: 5),
-                              LinkButton(
-                                onPressed: () {
-                                  setState(() {
-                                    _currentPageIndex = 1;
-                                  });
-                                },
-                                title: 'Live Videos',
-                                isSelected: _currentPageIndex == 1,
-                              ),
-                              SizedBox(width: 5),
-                              LinkButton(
-                                title: 'View Courses PDF',
-                                isSelected: _currentPageIndex == 2,
-                                onPressed: () {
-                                  setState(() {
-                                    _currentPageIndex = 2;
-                                  });
-                                },
-                              ),
-                              SizedBox(width: 5),
-                              LinkButton(
-                                title: 'View Students',
-                                onPressed: () {
-                                  setState(() {
-                                    _currentPageIndex = 3;
-                                  });
-                                },
-                                isSelected: _currentPageIndex == 3,
+                              const SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  Text(
+                                    widget.teacher.subject,
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  Text(
+                                    '${widget.teacher.courseCount} Courses',
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
                         ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        right: 16.0, left: 16.0, top: 8.0),
+                    child: Container(
+                      color: ColorsApp.whiteClr,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            LinkButton(
+                              onPressed: () {
+                                setState(() {
+                                  _currentPageIndex = 0;
+                                });
+                              },
+                              title: 'Watch Videos',
+                              isSelected: _currentPageIndex == 0,
+                            ),
+                            const SizedBox(width: 5),
+                            LinkButton(
+                              onPressed: () {
+                                setState(() {
+                                  _currentPageIndex = 1;
+                                });
+                              },
+                              title: 'Live Videos',
+                              isSelected: _currentPageIndex == 1,
+                            ),
+                            const SizedBox(width: 5),
+                            LinkButton(
+                              title: 'View Courses PDF',
+                              isSelected: _currentPageIndex == 2,
+                              onPressed: () {
+                                setState(() {
+                                  _currentPageIndex = 2;
+                                });
+                              },
+                            ),
+                            const SizedBox(width: 5),
+                            LinkButton(
+                              title: 'View Students',
+                              onPressed: () {
+                                setState(() {
+                                  _currentPageIndex = 3;
+                                });
+                              },
+                              isSelected: _currentPageIndex == 3,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-            // Second Half: 70%
-            Expanded(
-              flex: 8,
-              child: Container(
-                color: Colors.white,
-                child: _buildPage(),
-              ),
+          ),
+          // Second Half: 70%
+          Expanded(
+            flex: 8,
+            child: Container(
+              color: Colors.white,
+              child: _buildPage(),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -165,7 +167,7 @@ class _TeacherDetailsScreenState extends State<TeacherDetailsScreen> {
   Widget _buildPage() {
     switch (_currentPageIndex) {
       case 0:
-        return VideoScreen();
+        return const VideoScreen();
       case 1:
         return LiveVideoScreen();
       case 2:

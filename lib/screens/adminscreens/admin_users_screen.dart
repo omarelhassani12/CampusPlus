@@ -129,7 +129,11 @@ class AdminUsersScreenState extends State<AdminUsersScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ColorsApp.mainClr,
-        title: const Text('User Management'),
+        title: const Text(
+          'User Management',
+          style: TextStyle(color: Colors.white),
+        ),
+        iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
         elevation: 0,
         actions: [
